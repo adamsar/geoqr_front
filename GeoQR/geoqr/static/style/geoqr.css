@@ -1,0 +1,28 @@
+/* Basic style information*/
+
+.text-centered{
+    width: 100%;
+    text-align: center;
+}
+
+.redeemed{
+    width: 100%;
+    font-weight: bold;
+    font-size: 120%;
+    color: maroon;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.expired{
+    background: #FFF8DC;
+}
+
+.completed{
+  background: #ECE5B6;
+}
+
+.info{
+    font-size: 130%;
+    font-weight: bold;
+}
