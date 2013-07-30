@@ -9,28 +9,32 @@
 </%block>
 
 <%block name="content">
-      <script>
-          $(window).ready(function(){
-            initiate_geolocation();
-          });
-
-          function initiate_geolocation() {
-              navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_errors);
-          }          
-
-	  function handle_errors(error){	  
-          }
-
-          function handle_geolocation_query(position){
-	    //Put the lat and long in their proper place
-	    $("input[name=lat]").val(position.coords.latitude);
-	    $("input[name=lon]").val(position.coords.longitude);
-	    //And use a mini "template" to render a proper form
-	    $("#form-container").html('' +
-	      '<input type="file" name="code" accept="image/*" capture="camera"><br/>' +
-	      '<input type="submit" name="submit" value="提出" />');
-          }
-      </script>
+<style>
+.hidden{
+display: none;
+}
+</style>
+<script>
+  $(window).ready(function(){
+  initiate_geolocation();
+  });
+  
+  function initiate_geolocation() {
+  navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_errors);
+  }          
+  
+  function handle_errors(error){	  
+  }
+  
+  function handle_geolocation_query(position){
+  //Put the lat and long in their proper place
+  $("input[name=lat]").val(position.coords.latitude);
+  $("input[name=lon]").val(position.coords.longitude);
+  $(".info").remove();
+  $(".hidden").show();
+  '');
+  }
+</script>
 
 <div data-role="fieldcontain">
   <div class="text-centered"
@@ -40,11 +44,15 @@
 	enctype="multipart/form-data">
     <input type="hidden" name="lat"/>
     <input type="hidden" name="lon"/>
-      <div id="form-container">
-	<label for="code" class="camera">
-	  現地を教える許可をあげてください
-	</label>
-      </div>
+    <div class="info">
+      現地を教える許可をあげてください
+    </div>
+
+    <label for="code" class="hidden">
+      写真取る
+    </label>
+    <input type="file" class="hidden" name="code" accept="image/*" capture="camera">
+    <input type="submit" class="hidden" name="submit" value="提出" />
   </form>
   </div>
 </div>
