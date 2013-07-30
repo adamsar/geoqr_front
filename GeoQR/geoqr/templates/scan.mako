@@ -9,11 +9,6 @@
 </%block>
 
 <%block name="content">
-<style>
-.hidden{
-display: none;
-}
-</style>
 
 <script>
   $(window).ready(function(){
@@ -33,7 +28,6 @@ display: none;
     $("input[name=lon]").val(position.coords.longitude);
     $(".info").remove();
     $(".hidden").show();
-    $("input[type=submit]").parent().click(function(ev)
   }
 </script>
 
