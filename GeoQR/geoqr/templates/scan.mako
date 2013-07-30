@@ -33,12 +33,12 @@ display: none;
     $("input[name=lon]").val(position.coords.longitude);
     $(".info").remove();
     $(".hidden").show();
-    $("input[type=submit]").parent().click(function(){$("input[type=submit]").click()});
+    $("input[type=submit]").parent().click(function(ev)
   }
 </script>
 
 <div data-role="fieldcontain">
-  <div class="text-centered"
+  <div class="text-centered">
 
   <form action="/doScan" method="POST" data-ajax="false"
 	accept-charset="utf-8"
