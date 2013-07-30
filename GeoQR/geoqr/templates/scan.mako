@@ -28,7 +28,7 @@
 	    //And use a mini "template" to render a proper form
 	    $("#form-container").html('' +
 	      '<input type="file" name="code" accept="image/*" capture="camera"><br/>' +
-	      '<a data-role="button" href="javascript:$(\'form\').submit();">Ok</a>');
+	      '<input type="submit" name="submit" value="提出" />');
           }
       </script>
 
