@@ -33,6 +33,7 @@ display: none;
     $("input[name=lon]").val(position.coords.longitude);
     $(".info").remove();
     $(".hidden").show();
+    $("input[type=submit]").parent().click(function(){$("input[type=submit]").click()});
   }
 </script>
 
