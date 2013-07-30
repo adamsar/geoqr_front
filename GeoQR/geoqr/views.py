@@ -110,7 +110,7 @@ def list(request):
     for c in checkins:
         c['location'] = request.api.get("locations", c['location'])
         c['expired'] = date_parse(c['expiresOn']) > datetime.datetime.now()
-    
+    sorted(checkins, key = lambda checkin: checkin['createdOn'], reverse=True)
     return {
         "checkins": checkins
     }
