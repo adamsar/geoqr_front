@@ -14,6 +14,7 @@
 display: none;
 }
 </style>
+
 <script>
   $(window).ready(function(){
   initiate_geolocation();
@@ -28,11 +29,10 @@ display: none;
   
   function handle_geolocation_query(position){
   //Put the lat and long in their proper place
-  $("input[name=lat]").val(position.coords.latitude);
-  $("input[name=lon]").val(position.coords.longitude);
-  $(".info").remove();
-  $(".hidden").show();
-  '');
+    $("input[name=lat]").val(position.coords.latitude);
+    $("input[name=lon]").val(position.coords.longitude);
+    $(".info").remove();
+    $(".hidden").show();
   }
 </script>
 
