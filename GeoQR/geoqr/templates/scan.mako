@@ -24,8 +24,9 @@
   
   function handle_geolocation_query(position){
   //Put the lat and long in their proper place
-    $("input[name=lat]").val(position.coords.latitude);
-    $("input[name=lon]").val(position.coords.longitude);
+    var fullLink = "http://zxing.appspot.com/scan?ret=";
+    fullLink +=  encodeURIComponent("http://ec2-54-249-136-165.ap-northeast-1.compute.amazonaws.com/doScan?q={CODE}&lat=" + position.coords.latitude + "&lon" + position.coords.longitude);
+    $("#scanLink").attr("href", fullLink);
     $(".info").remove();
     $(".hidden").show();
   }
@@ -33,22 +34,10 @@
 
 <div data-role="fieldcontain">
   <div class="text-centered">
-
-  <form action="/doScan" method="POST" data-ajax="false"
-	accept-charset="utf-8"
-	enctype="multipart/form-data">
-    <input type="hidden" name="lat"/>
-    <input type="hidden" name="lon"/>
     <div class="info">
       現地を教える許可をあげてください
     </div>
-
-    <label for="code" class="hidden">
-      写真取る
-    </label>
-    <input type="file" class="hidden" name="code" accept="image/*" capture="camera">
-    <input type="submit" class="hidden" name="submit" value="提出" />
-  </form>
+    <a data-role="button" class="hidden" id="scanLink" href="#">スキャン</a>
   </div>
 </div>
 

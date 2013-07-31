@@ -8,7 +8,7 @@ from geoqr.lib import googlemaps
 from geoqr.lib import qrencoder
 
 import datetime
-import httplib2
+import urllib
 
 def date_parse(date):
     """parses a string to a proper datetime object
@@ -82,11 +82,7 @@ def doScan(request):
     """Processes a photo, gets the geoqr info from it and """
     p = request.params
     lat, lon = p.get("lat"), p.get("lon")
-    f = request.POST['code'].file
-    f.seek(0)
-    code = decode_with_esponce(f)
-    if not code:
-        raise exc.HTTPFound(request.route_url("scan") + "?error=CODE_NOT_READABLE")
+    code = p.get("q")
     created = request.api.create("accounts/%s/checkins" % request.session['user']['id'],
                                  data={
                                      "code": code,
