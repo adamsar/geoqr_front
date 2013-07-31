@@ -13,7 +13,7 @@ requires = [
     'httplib2',
     'lxml',
     'pil',
-    'geoqr'
+    'qrcode'
     ]
 
 setup(name='GeoQR',

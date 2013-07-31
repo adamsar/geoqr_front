@@ -2,12 +2,13 @@ from pyramid.view import view_config
 
 import pyramid.httpexceptions as exc
 
-from geoqr.lib.qrdecoder import decode
+from geoqr.lib.qrdecoder import decode_with_esponce
 
 from geoqr.lib import googlemaps
 from geoqr.lib import qrencoder
 
 import datetime
+import httplib2
 
 def date_parse(date):
     """parses a string to a proper datetime object
@@ -70,10 +71,7 @@ def actions(request):
 @view_config(route_name="scan", renderer="scan.mako")
 def scan(request):
     """Page to scan in a new photo"""
-    for x in request.params.iteritems():
-        print x
     errors = handle_errors(request)
-    print errors
     return {
         "errors": errors
         }
@@ -86,7 +84,7 @@ def doScan(request):
     lat, lon = p.get("lat"), p.get("lon")
     f = request.POST['code'].file
     f.seek(0)
-    code = decode(request.POST['code'].filename, f)
+    code = decode_with_esponce(f)
     if not code:
         raise exc.HTTPFound(request.route_url("scan") + "?error=CODE_NOT_READABLE")
     created = request.api.create("accounts/%s/checkins" % request.session['user']['id'],
@@ -110,7 +108,7 @@ def list(request):
     for c in checkins:
         c['location'] = request.api.get("locations", c['location'])
         c['expired'] = date_parse(c['expiresOn']) > datetime.datetime.now()
-    sorted(checkins, key = lambda checkin: checkin['createdOn'], reverse=True)
+    checkins = sorted(checkins, key = lambda checkin: checkin['createdOn'], reverse=True)
     return {
         "checkins": checkins
     }
@@ -159,6 +157,7 @@ def doAdd(request):
         img = qrencoder.generate_from_code(new_loc['code'])
         raise exc.HTTPFound(img)
     raise exc.HTTPFound(request.route_url("add_listing") + "?error=UNABLE_TO_CREATE")
+    
     
 @view_config(route_name="redeem", renderer="string")
 def redeem(request):

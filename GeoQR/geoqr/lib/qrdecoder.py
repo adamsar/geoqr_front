@@ -4,6 +4,8 @@ Decodes QRCodes using zxcoder
 import httplib
 import mimetypes
 import urlparse
+import httplib2
+import json
 from lxml import etree
 
 RAW_CODE = "<td>Raw bytes</td><td><pre.*>(.+)</pre>"
@@ -75,3 +77,14 @@ def decode(name, f):
         return tree.xpath("/html/body/div/table/tr[5]/td[2]/pre")[0].text
     except:
         return None
+
+ESPONCE_URL = "http://www.esponce.com/api/v3/decode?format=jpg&auth=ec91b92b9bd3b604823240ad92f4a024"
+def decode_with_esponce(img):
+    """
+    Uses the Esponsce API to attempt to decode a QR code
+    """
+    h = httplib2.Http()
+    resp, content = h.request(ESPONCE_URL, "POST", img.read())
+    content = json.loads(content)
+    return content.get("content")
+    
